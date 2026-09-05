@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Campus Events — найближча подія</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <h1 class="page__title">Найближча подія</h1>
+
+      <article class="event-card event-card--featured">
+        <header class="event-card__header">
+          <p class="event-card__badge">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 8v4l3 2m6-2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            Відкрита лекція
+          </p>
+
+          <h2 class="event-card__title">Мобільний UX: як проектувати екрани</h2>
+
+          <ul class="event-card__meta">
+            <li class="event-card__meta-item">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 6h16M4 6v13a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V6M4 6l.5-2h15l.5 2M8 3v3m8-3v3M8 12h8m-8 4h5"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <time datetime="2026-09-15T16:00">15 вересня, 16:00</time>
+            </li>
+            <li class="event-card__meta-item">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"
+                  stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                <circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="2" />
+              </svg>
+              Корпус №3, ауд. 214
+            </li>
+          </ul>
+        </header>
+
+        <p class="event-card__text">
+          Розбираємо, як проектувати екрани мобільного застосунку так, щоб ними
+          було зручно користуватися однією рукою і без зайвих кроків.
+        </p>
+
+        <ul class="event-card__list">
+          <li>
+            <svg class="icon icon--check" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span>Структура екрана та ієрархія заголовків</span>
+          </li>
+          <li>
+            <svg class="icon icon--check" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span>Зона досяжності великого пальця й розміри кнопок</span>
+          </li>
+          <li>
+            <svg class="icon icon--check" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span>Доступність: контраст, фокус і читачі екрана</span>
+          </li>
+        </ul>
+
+        <footer class="event-card__footer">
+          <p class="event-card__seats">
+            <span class="event-card__seats-value">12</span>
+            вільних місць
+          </p>
+          <button class="event-card__button" type="button">
+            Зареєструватися
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M19 12H5m14 0-4 4m4-4-4-4"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </footer>
+      </article>
+    </main>
+  </body>
+</html>
