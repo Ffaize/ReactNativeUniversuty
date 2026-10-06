@@ -1,0 +1,145 @@
+:root {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    line-height: 1.5;
+    color: #172033;
+    background-color: #f4f6fb;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+#root {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 24px 16px;
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+nav a {
+    color: #1554b5;
+    padding: 8px 0;
+}
+
+nav a.active {
+    font-weight: bold;
+    text-decoration-thickness: 3px;
+}
+
+.card {
+    padding: 24px;
+    border-top: 6px solid #1554b5;
+    border-radius: 14px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(20, 40, 80, 0.08);
+}
+
+h1 {
+    margin-top: 0;
+    color: #1554b5;
+}
+
+section section {
+    margin-top: 28px;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+figure {
+    margin: 12px 0;
+}
+
+figcaption,
+.caption {
+    font-size: 0.9rem;
+    color: #5b6478;
+}
+
+.video-frame {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 0;
+    border-radius: 8px;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+button {
+    padding: 8px 18px;
+    border: 2px solid #1554b5;
+    border-radius: 20px;
+    color: #ffffff;
+    background: #1554b5;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0f4291;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+.secondary {
+    color: #1554b5;
+    background: #ffffff;
+}
+
+.secondary:hover {
+    background: #e8effa;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+}
+
+input {
+    width: 100%;
+    max-width: 300px;
+    padding: 8px 12px;
+    border: 2px solid #cfd6e4;
+    border-radius: 8px;
+}
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.result {
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.error {
+    color: #c0392b;
+    font-weight: 600;
+}
+
+:focus-visible {
+    outline: 3px solid #1554b5;
+    outline-offset: 4px;
+}
