@@ -80,3 +80,13 @@ npm install
 npx tsc --noEmit
 npx expo start
 ```
+
+## Практична 9
+
+```bash
+cd lab6
+npm install
+npx expo install --check
+npx tsc --noEmit
+npx expo start
+```
