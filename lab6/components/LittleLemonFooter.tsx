@@ -1,11 +1,17 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-export function LittleLemonFooter() {
+import type { Palette } from '../theme/palette';
+
+type LittleLemonFooterProps = {
+    colors: Palette;
+};
+
+export function LittleLemonFooter({ colors }: LittleLemonFooterProps) {
     const year = new Date().getFullYear();
 
     return (
-        <View style={styles.footer}>
-            <Text style={styles.text}>© {year} Little Lemon</Text>
+        <View style={[styles.footer, { backgroundColor: colors.surface, borderTopColor: colors.border }]}>
+            <Text style={[styles.text, { color: colors.muted }]}>© {year} Little Lemon</Text>
         </View>
     );
 }
@@ -14,10 +20,9 @@ const styles = StyleSheet.create({
     footer: {
         paddingHorizontal: 20,
         paddingVertical: 14,
-        backgroundColor: '#333333',
+        borderTopWidth: 1,
     },
     text: {
-        color: '#FFFFFF',
         fontSize: 14,
         textAlign: 'center',
     },
