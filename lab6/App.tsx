@@ -1,10 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
-import { ScrollView, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 import { LittleLemonHeader } from './components/LittleLemonHeader';
-import { WelcomeScreen } from './components/WelcomeScreen';
 import { LittleLemonFooter } from './components/LittleLemonFooter';
+import MenuFlatScreen from './screens/MenuFlatScreen';
+import MenuGroupedScreen from './screens/MenuGroupedScreen';
+import WelcomeScreen from './screens/WelcomeScreen';
+import LoginScreen from './screens/LoginScreen';
+
+// для перевірки підставляємо по черзі:
+// MenuFlatScreen, MenuGroupedScreen, WelcomeScreen, LoginScreen
+const ActiveScreen = MenuFlatScreen;
 
 export default function App() {
     return (
@@ -12,13 +19,9 @@ export default function App() {
             <SafeAreaView style={styles.screen} edges={['top', 'bottom']}>
                 <StatusBar style="light" />
                 <LittleLemonHeader />
-                <ScrollView
-                    style={styles.scroll}
-                    contentContainerStyle={styles.scrollContent}
-                    indicatorStyle="white"
-                >
-                    <WelcomeScreen />
-                </ScrollView>
+                <View style={styles.content}>
+                    <ActiveScreen />
+                </View>
                 <LittleLemonFooter />
             </SafeAreaView>
         </SafeAreaProvider>
@@ -30,12 +33,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#495E57',
     },
-    scroll: {
+    content: {
         flex: 1,
-    },
-    scrollContent: {
-        paddingHorizontal: 20,
-        paddingTop: 20,
-        paddingBottom: 32,
     },
 });
