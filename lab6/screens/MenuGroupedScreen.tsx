@@ -3,6 +3,7 @@ import type { SectionListData } from 'react-native';
 
 import { MenuItemRow } from '../components/MenuItemRow';
 import { categories, menuItems } from '../data/menu';
+import type { Palette } from '../theme/palette';
 import type { CategoryInfo, MenuItem } from '../types/menu';
 
 // секції будуються з тих самих даних, окремої копії меню немає
@@ -11,24 +12,35 @@ const sections: SectionListData<MenuItem, CategoryInfo>[] = categories.map((cate
     data: menuItems.filter((item) => item.category === category.key),
 }));
 
-function Separator() {
-    return <View style={styles.separator} />;
-}
+type MenuGroupedScreenProps = {
+    colors: Palette;
+};
 
-export default function MenuGroupedScreen() {
+export default function MenuGroupedScreen({ colors }: MenuGroupedScreenProps) {
     return (
         <SectionList<MenuItem, CategoryInfo>
             style={styles.list}
             contentContainerStyle={styles.content}
             sections={sections}
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) => <MenuItemRow item={item} />}
+            renderItem={({ item }) => <MenuItemRow item={item} colors={colors} />}
             renderSectionHeader={({ section }) => (
-                <Text style={styles.sectionTitle}>{section.title}</Text>
+                <Text
+                    style={[
+                        styles.sectionTitle,
+                        { backgroundColor: colors.background, color: colors.accent },
+                    ]}
+                >
+                    {section.title}
+                </Text>
             )}
             stickySectionHeadersEnabled={true}
-            ItemSeparatorComponent={Separator}
-            ListEmptyComponent={<Text style={styles.empty}>Меню поки порожнє.</Text>}
+            ItemSeparatorComponent={() => (
+                <View style={[styles.separator, { backgroundColor: colors.border }]} />
+            )}
+            ListEmptyComponent={
+                <Text style={[styles.empty, { color: colors.muted }]}>Меню поки порожнє.</Text>
+            }
         />
     );
 }
@@ -44,18 +56,14 @@ const styles = StyleSheet.create({
     sectionTitle: {
         paddingTop: 16,
         paddingBottom: 8,
-        backgroundColor: '#495E57',
-        color: '#F4CE14',
         fontSize: 22,
         fontWeight: '700',
     },
     separator: {
-        height: 1,
-        backgroundColor: '#5F7770',
+        height: StyleSheet.hairlineWidth,
     },
     empty: {
         marginTop: 16,
-        color: '#EDEFEE',
         fontSize: 17,
     },
 });

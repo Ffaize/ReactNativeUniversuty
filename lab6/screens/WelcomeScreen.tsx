@@ -19,9 +19,11 @@ type WelcomeScreenProps = {
     colors: Palette;
     email: string;
     onExit: () => void;
+    // є тільки у стековому варіанті (додаткове завдання)
+    onOpenMenu?: () => void;
 };
 
-export default function WelcomeScreen({ colors, email, onExit }: WelcomeScreenProps) {
+export default function WelcomeScreen({ colors, email, onExit, onOpenMenu }: WelcomeScreenProps) {
     const [name, setName] = useState('');
     const { width } = useWindowDimensions();
 
@@ -51,7 +53,7 @@ export default function WelcomeScreen({ colors, email, onExit }: WelcomeScreenPr
                             Ласкаво просимо до Little Lemon
                         </Text>
                         <Text style={[styles.note, { color: colors.muted }]}>
-                            Дані перевірено локально. Відкрито навчальний екран для {email}.
+                            Навчальний екран привітання для {email}.
                         </Text>
                     </View>
                 </View>
@@ -97,6 +99,23 @@ export default function WelcomeScreen({ colors, email, onExit }: WelcomeScreenPr
                 </Text>
 
                 <NetworkLogo colors={colors} uri="https://reactnative.dev/img/tiny_logo.png" />
+
+                {onOpenMenu && (
+                    <Pressable
+                        accessibilityRole="button"
+                        onPress={onOpenMenu}
+                        style={({ pressed }) => [
+                            styles.button,
+                            styles.buttonOutline,
+                            { borderColor: colors.accent },
+                            pressed && styles.buttonPressed,
+                        ]}
+                    >
+                        <Text style={[styles.buttonText, { color: colors.text }]}>
+                            Переглянути меню
+                        </Text>
+                    </Pressable>
+                )}
 
                 <Pressable
                     accessibilityRole="button"
@@ -184,6 +203,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 24,
+    },
+    buttonOutline: {
+        borderWidth: 2,
     },
     buttonPressed: {
         opacity: 0.75,
