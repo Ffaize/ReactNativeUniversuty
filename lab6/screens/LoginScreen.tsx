@@ -1,42 +1,52 @@
 import { useState } from 'react';
 import {
+    Keyboard,
     KeyboardAvoidingView,
     Platform,
+    Pressable,
     ScrollView,
     StyleSheet,
     Text,
     TextInput,
 } from 'react-native';
 
-function isEmailFormatValid(value: string): boolean {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
-}
+import type { Palette } from '../theme/palette';
 
-export default function LoginScreen() {
+type LoginScreenProps = {
+    colors: Palette;
+    onContinue: (email: string) => void;
+};
+
+export default function LoginScreen({ colors, onContinue }: LoginScreenProps) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [emailTouched, setEmailTouched] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
-    function handleEmailBlur() {
-        // setEmail не змінює email одразу, тому перевіряємо локальну змінну
-        const normalized = email.trim();
-        setEmail(normalized);
-        setEmailTouched(true);
-    }
+    function handleContinue() {
+        const normalizedEmail = email.trim();
+        const emailLooksValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail);
 
-    let emailMessage = '';
-    if (emailTouched || email.length > 0) {
-        if (email.trim() === '') {
-            emailMessage = 'Введіть email.';
-        } else if (!isEmailFormatValid(email)) {
-            emailMessage = 'Email має бути у форматі name@example.com.';
-        } else {
-            emailMessage = 'Формат email виглядає правильно.';
+        if (!emailLooksValid) {
+            setError('Введіть email у форматі name@example.com.');
+            return;
         }
+
+        if (password.length === 0) {
+            setError('Введіть навчальний пароль.');
+            return;
+        }
+
+        setError(null);
+        Keyboard.dismiss();
+        setPassword('');
+        onContinue(normalizedEmail);
     }
 
-    const emailOk = isEmailFormatValid(email);
-    const passwordOk = password.length > 0;
+    const inputColors = {
+        color: colors.text,
+        backgroundColor: colors.surface,
+        borderColor: colors.border,
+    };
 
     return (
         <KeyboardAvoidingView
@@ -48,36 +58,33 @@ export default function LoginScreen() {
                 keyboardShouldPersistTaps="handled"
                 keyboardDismissMode="on-drag"
             >
-                <Text style={styles.title}>Вхід до Little Lemon</Text>
-                <Text style={styles.text}>
+                <Text style={[styles.title, { color: colors.text }]}>Вхід до Little Lemon</Text>
+                <Text style={[styles.text, { color: colors.muted }]}>
                     Навчальна форма: дані перевіряються лише локально і нікуди не надсилаються.
+                    Використовуйте вигадані email і пароль.
                 </Text>
 
-                <Text style={styles.label}>Email</Text>
+                <Text style={[styles.label, { color: colors.text }]}>Email</Text>
                 <TextInput
-                    style={styles.input}
+                    style={[styles.input, inputColors]}
                     value={email}
                     onChangeText={setEmail}
-                    onBlur={handleEmailBlur}
                     placeholder="name@example.com"
-                    placeholderTextColor="#9FB0A8"
+                    placeholderTextColor={colors.muted}
                     accessibilityLabel="Email"
                     keyboardType="email-address"
                     autoCapitalize="none"
                     autoCorrect={false}
                     returnKeyType="next"
                 />
-                {emailMessage !== '' && (
-                    <Text style={emailOk ? styles.hintOk : styles.hintError}>{emailMessage}</Text>
-                )}
 
-                <Text style={styles.label}>Пароль</Text>
+                <Text style={[styles.label, { color: colors.text }]}>Пароль</Text>
                 <TextInput
-                    style={styles.input}
+                    style={[styles.input, inputColors]}
                     value={password}
                     onChangeText={setPassword}
                     placeholder="Ваш пароль"
-                    placeholderTextColor="#9FB0A8"
+                    placeholderTextColor={colors.muted}
                     accessibilityLabel="Пароль"
                     secureTextEntry
                     autoCapitalize="none"
@@ -85,15 +92,24 @@ export default function LoginScreen() {
                     returnKeyType="done"
                     submitBehavior="blurAndSubmit"
                 />
-                <Text style={passwordOk ? styles.hintOk : styles.hint}>
-                    {passwordOk ? 'Пароль введено.' : 'Пароль ще не введено.'}
-                </Text>
 
-                <Text style={styles.status}>
-                    {emailOk && passwordOk
-                        ? 'Обидва поля заповнено. Дані перевірено локально.'
-                        : 'Заповніть email і пароль.'}
-                </Text>
+                {error !== null && (
+                    <Text style={[styles.message, { color: colors.error }]}>{error}</Text>
+                )}
+
+                <Pressable
+                    accessibilityRole="button"
+                    onPress={handleContinue}
+                    style={({ pressed }) => [
+                        styles.button,
+                        { backgroundColor: colors.accent },
+                        pressed && styles.buttonPressed,
+                    ]}
+                >
+                    <Text style={[styles.buttonText, { color: colors.onAccent }]}>
+                        Увійти (демо)
+                    </Text>
+                </Pressable>
             </ScrollView>
         </KeyboardAvoidingView>
     );
@@ -111,49 +127,45 @@ const styles = StyleSheet.create({
     },
     title: {
         marginBottom: 8,
-        color: '#F4CE14',
         fontSize: 26,
         fontWeight: '700',
     },
     text: {
-        color: '#EDEFEE',
         fontSize: 16,
         lineHeight: 24,
     },
     label: {
         marginTop: 20,
         marginBottom: 6,
-        color: '#EDEFEE',
         fontSize: 16,
     },
     input: {
         paddingHorizontal: 12,
         paddingVertical: 10,
         borderWidth: 1,
-        borderColor: '#9FB0A8',
         borderRadius: 8,
-        color: '#FFFFFF',
         fontSize: 17,
     },
-    hint: {
-        marginTop: 6,
-        color: '#C9D3CE',
-        fontSize: 14,
-    },
-    hintOk: {
-        marginTop: 6,
-        color: '#A8E6B0',
-        fontSize: 14,
-    },
-    hintError: {
-        marginTop: 6,
-        color: '#FFB4AB',
-        fontSize: 14,
-    },
-    status: {
-        marginTop: 24,
-        color: '#EDEFEE',
+    message: {
         fontSize: 16,
         lineHeight: 24,
+        marginVertical: 12,
+    },
+    button: {
+        minHeight: 48,
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 16,
+    },
+    buttonPressed: {
+        opacity: 0.75,
+    },
+    buttonText: {
+        fontSize: 18,
+        fontWeight: '600',
+        textAlign: 'center',
     },
 });

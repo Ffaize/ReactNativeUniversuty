@@ -1,28 +1,43 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
+import { useState } from 'react';
+import { StyleSheet, useColorScheme, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 import { LittleLemonHeader } from './components/LittleLemonHeader';
 import { LittleLemonFooter } from './components/LittleLemonFooter';
-import MenuFlatScreen from './screens/MenuFlatScreen';
-import MenuGroupedScreen from './screens/MenuGroupedScreen';
-import WelcomeScreen from './screens/WelcomeScreen';
 import LoginScreen from './screens/LoginScreen';
+import WelcomeScreen from './screens/WelcomeScreen';
+import { darkColors, lightColors } from './theme/palette';
 
-// для перевірки підставляємо по черзі:
-// MenuFlatScreen, MenuGroupedScreen, WelcomeScreen, LoginScreen
-const ActiveScreen = MenuFlatScreen;
+// екрани списків з лаби 7 лишаються в screens/ (MenuFlatScreen, MenuGroupedScreen)
 
 export default function App() {
+    const [demoEmail, setDemoEmail] = useState<string | null>(null);
+
+    const colorScheme = useColorScheme();
+    const isDark = colorScheme === 'dark';
+    const colors = isDark ? darkColors : lightColors;
+
     return (
         <SafeAreaProvider>
-            <SafeAreaView style={styles.screen} edges={['top', 'bottom']}>
-                <StatusBar style="light" />
-                <LittleLemonHeader />
+            <SafeAreaView
+                style={[styles.screen, { backgroundColor: colors.background }]}
+                edges={['top', 'bottom']}
+            >
+                <StatusBar style={isDark ? 'light' : 'dark'} />
+                <LittleLemonHeader colors={colors} />
                 <View style={styles.content}>
-                    <ActiveScreen />
+                    {demoEmail === null ? (
+                        <LoginScreen colors={colors} onContinue={setDemoEmail} />
+                    ) : (
+                        <WelcomeScreen
+                            colors={colors}
+                            email={demoEmail}
+                            onExit={() => setDemoEmail(null)}
+                        />
+                    )}
                 </View>
-                <LittleLemonFooter />
+                <LittleLemonFooter colors={colors} />
             </SafeAreaView>
         </SafeAreaProvider>
     );
@@ -31,7 +46,6 @@ export default function App() {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        backgroundColor: '#495E57',
     },
     content: {
         flex: 1,
