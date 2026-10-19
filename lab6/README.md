@@ -36,3 +36,29 @@ npx tsc --noEmit
 - Додатково: `useWindowDimensions` (від 600 px логотип і текст стають у рядок) та `components/NetworkLogo.tsx` — мережеве зображення зі станами `loading / ready / error`.
 
 Скріншоти (світла й темна тема, помилки форми) — `screenshots/lab8/`.
+
+## Лаба 9. Навігація
+
+Встановлені пакети: `@react-navigation/native`, `native-stack`, `bottom-tabs`, `drawer` (7.x), `react-native-screens`, `react-native-gesture-handler`, `@expo/vector-icons`, `react-native-reanimated` + `react-native-worklets`.
+
+```bash
+npm install
+npx expo install --check
+npx tsc --noEmit
+npx expo start
+```
+
+Варіант навігації вибирається в `App.tsx`:
+
+```tsx
+const ActiveNavigator = StackFlow; // або TabsFlow, DrawerFlow
+```
+
+- `navigation/types.ts` — параметри маршрутів для трьох варіантів.
+- `navigation/StackFlow.tsx` — Login → Welcome (email у параметрах), повернення кнопкою заголовка або «Повернутися до форми». Додатково: Welcome → Меню → Деталі страви (`Details: { itemId }`).
+- `navigation/TabsFlow.tsx` — вкладки «Форма» і «Привітання» з іконками Ionicons; без email — «Гість».
+- `navigation/DrawerFlow.tsx` — ті самі розділи у бічному меню.
+- `theme/useAppColors.ts` — хук палітри за системною темою.
+- `components/ScreenFrame.tsx` — вміст екрана + підвал з нижнім safe area.
+
+Скріншоти — `screenshots/lab9/`.
