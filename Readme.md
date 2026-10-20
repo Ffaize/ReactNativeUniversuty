@@ -90,3 +90,66 @@ npx expo install --check
 npx tsc --noEmit
 npx expo start
 ```
+
+---
+
+# Захист
+
+## 7
+
+```bash
+git checkout lab7
+cd lab6
+npm install
+npx expo start -c
+```
+
+`lab6/App.tsx`
+
+```tsx
+const ActiveScreen = MenuFlatScreen;
+const ActiveScreen = MenuGroupedScreen;
+const ActiveScreen = WelcomeScreen;
+const ActiveScreen = LoginScreen;
+```
+
+## 8
+
+```bash
+git checkout lab8
+cd lab6
+npm install
+npx expo start -c
+```
+
+```text
+Увійти (демо) — порожні поля
+student
+student@example.com — без пароля
+student@example.com + пароль
+Повернутися до форми
+Налаштування телефону → темна тема
+```
+
+## 9
+
+```bash
+git checkout main
+cd lab6
+npm install
+npx expo start -c
+```
+
+`lab6/App.tsx`
+
+```tsx
+const ActiveNavigator = StackFlow;
+const ActiveNavigator = TabsFlow;
+const ActiveNavigator = DrawerFlow;
+```
+
+`lab6/navigation/DrawerFlow.tsx`
+
+```tsx
+drawerPosition: 'right',
+```
